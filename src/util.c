@@ -84,21 +84,13 @@ _unagi_info(const int line, const char *func, const char *fmt, ...)
  * \param func Calling function string
  * \param fmt Format of the message
  */
-void
-#ifdef __DEBUG__
-_unagi_debug(const int line, const char *func, const char *fmt, ...)
-{
-  fprintf(stderr, "%.6f: ", ev_time());
-  DO_DISPLAY_MESSAGE("DEBUG")
-}
-#else
-_unagi_debug(const int line __attribute__((unused)),
+void _unagi_debug(const int line __attribute__((unused)),
        const char *func __attribute__((unused)),
        const char *fmt __attribute__((unused)),
        ...)
 {
 }
-#endif /* __DEBUG__ */
+
 
 char *
 unagi_util_get_configuration_filename_path(const char *fname)
@@ -394,105 +386,3 @@ util_itree_size(unagi_util_itree_t *tree)
 
   return util_itree_size(tree->left) + util_itree_size(tree->right) + 1;
 }
-
-#ifdef __DEBUG__
-/** Print the tree, inner function */
-static void
-util_itree_print_rec(FILE *stream, unagi_util_itree_t *tree, uint32_t indent)
-{
-  uint32_t i;
-  for(i = 0; i < indent; i++)
-    fprintf(stream, " | ");
-
-  if(!tree)
-    fprintf(stream, " + NULL\n");
-  else
-    {
-      fprintf(stream, " + %d (%p, %d)\n", tree->key, tree->value, tree->height);
-      util_itree_print_rec(stream, tree->left, indent + 1);
-      util_itree_print_rec(stream, tree->right, indent + 1);
-    }
-}
-
-/** Print a tree (for unagi_debug purpose) */
-void
-unagi_util_itree_print(FILE *stream, unagi_util_itree_t *tree)
-{
-  util_itree_print_rec(stream, tree, 0);
-  fprintf(stream, "\n");
-}
-
-/* Perform a self-check on the tree (for unagi_debug purpose)
-   Write potential errors on stream, return 0 in case of success */
-int
-unagi_util_itree_check(FILE *stream, unagi_util_itree_t *tree)
-{
-  int balance, local = 0, left, right, height;
-
-  if(tree == NULL)
-    return 0;
-
-  left = unagi_util_itree_check(stream, tree->left);
-  right = unagi_util_itree_check(stream, tree->right);
-
-  balance = util_itree_balance(tree);
-  if((balance >= 2) || (balance <= -2))
-    {
-      fprintf(stream, "ERROR : At node %d, balance is %d\n", tree->key, balance);
-      local = 2;
-    }
-
-  height = tree->height;
-  util_itree_fix_height(tree);
-  if(height != tree->height)
-    {
-      fprintf(stream,
-	      "WARNING : At node %d, height was %d, should have been %d\n",
-	      tree->key, height, tree->height);
-      local = 1;
-    }
-
-  if(tree->left)
-    {
-      if(tree->left->key >= tree->key)
-	{
-	  fprintf(stream, "ERROR : At node %d, left tree has higher key %d\n",
-		  tree->key, tree->left->key);
-	  local = 2;
-	}
-      if(tree->left->parent != tree)
-	{
-	  fprintf(stream,
-		  "ERROR : At node %d, left tree has parent %d\n",
-		  tree->key, tree->left->parent->key);
-	  local = 2;
-	}
-    }
-
-  if(tree->right)
-    {
-      if(tree->right->key <= tree->key)
-	{
-	  fprintf(stream, "ERROR : At node %d, right tree has lower key %d\n",
-		  tree->key, tree->right->key);
-	  local = 2;
-	}
-      if(tree->right->parent != tree)
-	{
-	  fprintf(stream,
-		  "ERROR : At node %d, right tree has parent %d\n",
-		  tree->key, tree->right->parent->key);
-	  local = 2;
-	}
-    }
-
-  if(left > local)
-    local = left;
-
-  if(right > local)
-    local = right;
-
-  return local;
-}
-
-#endif /* __DEBUG__ */

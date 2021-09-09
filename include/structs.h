@@ -54,7 +54,7 @@ typedef struct _unagi_display_extensions_t
 } unagi_display_extensions_t;
 
 //20ms (60Hz)
-#define UNAGI_DEFAULT_REPAINT_INTERVAL (float)0.017
+#define DEFAULT_REPAINT_INTERVAL (float)0.017
 
 /** Minimum value for the repaint interval, 5ms (200Hz), used on
     startup if the refresh rate is too high and when determining the

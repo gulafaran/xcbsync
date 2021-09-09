@@ -438,10 +438,10 @@ unagi_display_update_screen_information(xcb_randr_get_screen_info_cookie_t scree
         {
           float rate = 1 / (float) screen_info_reply->rate;
 
-          if(rate < UNAGI_MINIMUM_REPAINT_INTERVAL)
+          if(rate < MINIMUM_REPAINT_INTERVAL)
             {
               unagi_warn("Got refresh rate > 200Hz, set it to 200Hz");
-              rate = (float) UNAGI_MINIMUM_REPAINT_INTERVAL;
+              rate = (float)MINIMUM_REPAINT_INTERVAL;
             }
 
           unagi_debug("Set refresh rate interval to %.3fs", rate);
@@ -500,7 +500,7 @@ unagi_display_update_screen_information(xcb_randr_get_screen_info_cookie_t scree
   if(!globalconf.refresh_rate_interval)
     {
       unagi_warn("Could not get screen refresh rate with RandR, set it to 50Hz");
-      globalconf.refresh_rate_interval = (float) UNAGI_DEFAULT_REPAINT_INTERVAL;
+      globalconf.refresh_rate_interval = (float)DEFAULT_REPAINT_INTERVAL;
     }
 
   if(!globalconf.crtc_len)

@@ -189,8 +189,8 @@ am__define_uniq_tagged_files = \
 DIST_SUBDIRS = $(SUBDIRS)
 am__DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/config.h.in \
 	$(srcdir)/unagi.pc.in AUTHORS COPYING ChangeLog INSTALL NEWS \
-	README THANKS compile config.guess config.sub install-sh \
-	ltmain.sh missing
+	README THANKS compile config.guess config.sub depcomp \
+	install-sh ltmain.sh missing
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
 top_distdir = $(distdir)
@@ -235,13 +235,13 @@ distuninstallcheck_listfiles = find . -type f -print
 am__distuninstallcheck_listfiles = $(distuninstallcheck_listfiles) \
   | sed 's|^\./|$(prefix)/|' | grep -v '$(infodir)/dir$$'
 distcleancheck_listfiles = find . -type f -print
-ACLOCAL = ${SHELL} '/home/tom/dev/unagi/missing' aclocal-1.16
+ACLOCAL = ${SHELL} '/home/tom/dev/tom/xcbsync/missing' aclocal-1.16
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 1
 AR = ar
-AUTOCONF = ${SHELL} '/home/tom/dev/unagi/missing' autoconf
-AUTOHEADER = ${SHELL} '/home/tom/dev/unagi/missing' autoheader
-AUTOMAKE = ${SHELL} '/home/tom/dev/unagi/missing' automake-1.16
+AUTOCONF = ${SHELL} '/home/tom/dev/tom/xcbsync/missing' autoconf
+AUTOHEADER = ${SHELL} '/home/tom/dev/tom/xcbsync/missing' autoheader
+AUTOMAKE = ${SHELL} '/home/tom/dev/tom/xcbsync/missing' automake-1.16
 AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
@@ -304,7 +304,7 @@ LN_S = ln -s
 LTLIBOBJS = 
 LT_SYS_LIBRARY_PATH = 
 MAINT = #
-MAKEINFO = ${SHELL} '/home/tom/dev/unagi/missing' makeinfo
+MAKEINFO = ${SHELL} '/home/tom/dev/tom/xcbsync/missing' makeinfo
 MANIFEST_TOOL = :
 MKDIR_P = /usr/bin/mkdir -p
 NM = /usr/bin/nm -B
@@ -336,10 +336,10 @@ UNAGI_LIBS = -lxdg-basedir -lconfuse -ldbus-1 -ldrm -lxcb-composite -lxcb-xfixes
 UNAGI_REQUIRES = libxdg-basedir >= 1.0.0  libconfuse  dbus-1  libdrm  xcb >= 1.8  xcb-proto >= 1.6  xcb-composite  xcb-xfixes  xcb-damage  xcb-randr  xcb-ewmh >= 0.4.0  xcb-event  xcb-aux  xcb-keysyms  xkbcommon
 VERSION = 0.3.4
 XDG_CONFIG_DIR = /etc/xdg/unagi
-abs_builddir = /home/tom/dev/unagi
-abs_srcdir = /home/tom/dev/unagi
-abs_top_builddir = /home/tom/dev/unagi
-abs_top_srcdir = /home/tom/dev/unagi
+abs_builddir = /home/tom/dev/tom/xcbsync
+abs_srcdir = /home/tom/dev/tom/xcbsync
+abs_top_builddir = /home/tom/dev/tom/xcbsync
+abs_top_srcdir = /home/tom/dev/tom/xcbsync
 ac_ct_AR = ar
 ac_ct_CC = gcc
 ac_ct_DUMPBIN = 
@@ -368,7 +368,7 @@ host_vendor = pc
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /home/tom/dev/unagi/install-sh
+install_sh = ${SHELL} /home/tom/dev/tom/xcbsync/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale

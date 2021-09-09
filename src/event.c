@@ -245,11 +245,6 @@ event_handle_damage_notify(xcb_damage_notify_event_t *event)
               (uintmax_t) event->geometry.width, (uintmax_t) event->geometry.height,
               (uintmax_t) event->geometry.x, (uintmax_t) event->geometry.y);
 
-#ifdef __DEBUG__
-  static unsigned int damage_notify_event_counter = 0;
-  unagi_debug("DamageNotify: COUNT: %u", ++damage_notify_event_counter);
-#endif
-
   unagi_window_t *window = unagi_window_list_get(event->drawable);
   /* The window may have disappeared in the meantime or is not visible
      so do nothing */

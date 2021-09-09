@@ -92,11 +92,4 @@ unagi_util_itree_t *util_itree_remove(unagi_util_itree_t *, uint32_t);
 uint32_t util_itree_size(unagi_util_itree_t *);
 void unagi_util_itree_free(unagi_util_itree_t *);
 
-#ifdef __DEBUG__
-#include <stdio.h>
-
-void unagi_util_itree_print(FILE *, unagi_util_itree_t *);
-int unagi_util_itree_check(FILE *, unagi_util_itree_t *);
-#endif /* __DEBUG__ */
-
 #endif /* UNAGI_UTIL_H */

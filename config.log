@@ -310,8 +310,8 @@ configure:11940: checking how to hardcode library paths into programs
 configure:11965: result: immediate
 configure:12067: checking for shl_load
 configure:12067: gcc -o conftest -g -O2   conftest.c  >&5
-/usr/bin/ld: /tmp/cc08r7HL.o: in function `main':
-/home/tom/dev/unagi/conftest.c:50: undefined reference to `shl_load'
+/usr/bin/ld: /tmp/cclgaBtj.o: in function `main':
+/home/tom/dev/tom/xcbsync/conftest.c:50: undefined reference to `shl_load'
 collect2: error: ld returned 1 exit status
 configure:12067: $? = 1
 configure: failed program was:
@@ -420,8 +420,8 @@ configure:12353: $? = 0
 configure:12371: result: yes
 configure:12376: checking whether a statically linked program can dlopen itself
 configure:12457: gcc -o conftest -g -O2  -DHAVE_DLFCN_H  -Wl,--export-dynamic -static conftest.c   >&5
-/usr/bin/ld: /tmp/ccBfreI6.o: in function `main':
-/home/tom/dev/unagi/configure:12436: warning: Using 'dlopen' in statically linked applications requires at runtime the shared libraries from the glibc version used for linking
+/usr/bin/ld: /tmp/ccQAvzVH.o: in function `main':
+/home/tom/dev/tom/xcbsync/configure:12436: warning: Using 'dlopen' in statically linked applications requires at runtime the shared libraries from the glibc version used for linking
 configure:12460: $? = 0
 conftest: undefined symbol: _fnord
 configure:12478: result: no
@@ -452,8 +452,8 @@ Package 'libev', required by 'virtual:world', not found
 configure:12890: $? = 1
 configure:12984: checking for library containing ev_default_loop
 configure:13014: gcc -o conftest -g -O2   conftest.c  >&5
-/usr/bin/ld: /tmp/ccpCCWIO.o: in function `main':
-/home/tom/dev/unagi/conftest.c:31: undefined reference to `ev_default_loop'
+/usr/bin/ld: /tmp/cccFOsZ1.o: in function `main':
+/home/tom/dev/tom/xcbsync/conftest.c:31: undefined reference to `ev_default_loop'
 collect2: error: ld returned 1 exit status
 configure:13014: $? = 1
 configure: failed program was:
@@ -854,7 +854,7 @@ pkg_cv_UNAGI_LIBS='-lxdg-basedir -lconfuse -ldbus-1 -ldrm -lxcb-composite -lxcb-
 $(DX_DOCDIR)/$(PACKAGE).tag: $(DX_CONFIG) $(pkginclude_HEADERS)
 .INTERMEDIATE: doxygen-run $(DX_PS_GOAL) $(DX_PDF_GOAL)
 .PHONY: doxygen-run doxygen-doc $(DX_PS_GOAL) $(DX_PDF_GOAL)
-ACLOCAL='${SHELL} '\''/home/tom/dev/unagi/missing'\'' aclocal-1.16'
+ACLOCAL='${SHELL} '\''/home/tom/dev/tom/xcbsync/missing'\'' aclocal-1.16'
 AMDEPBACKSLASH='\'
 AMDEP_FALSE='#'
 AMDEP_TRUE=''
@@ -864,9 +864,9 @@ AM_DEFAULT_V='$(AM_DEFAULT_VERBOSITY)'
 AM_DEFAULT_VERBOSITY='1'
 AM_V='$(V)'
 AR='ar'
-AUTOCONF='${SHELL} '\''/home/tom/dev/unagi/missing'\'' autoconf'
-AUTOHEADER='${SHELL} '\''/home/tom/dev/unagi/missing'\'' autoheader'
-AUTOMAKE='${SHELL} '\''/home/tom/dev/unagi/missing'\'' automake-1.16'
+AUTOCONF='${SHELL} '\''/home/tom/dev/tom/xcbsync/missing'\'' autoconf'
+AUTOHEADER='${SHELL} '\''/home/tom/dev/tom/xcbsync/missing'\'' autoheader'
+AUTOMAKE='${SHELL} '\''/home/tom/dev/tom/xcbsync/missing'\'' automake-1.16'
 AWK='gawk'
 CC='gcc'
 CCDEPMODE='depmode=gcc3'
@@ -946,7 +946,7 @@ LT_SYS_LIBRARY_PATH=''
 MAINT='#'
 MAINTAINER_MODE_FALSE=''
 MAINTAINER_MODE_TRUE='#'
-MAKEINFO='${SHELL} '\''/home/tom/dev/unagi/missing'\'' makeinfo'
+MAKEINFO='${SHELL} '\''/home/tom/dev/tom/xcbsync/missing'\'' makeinfo'
 MANIFEST_TOOL=':'
 MKDIR_P='/usr/bin/mkdir -p'
 NM='/usr/bin/nm -B'
@@ -1019,7 +1019,7 @@ host_vendor='pc'
 htmldir='${docdir}'
 includedir='${prefix}/include'
 infodir='${datarootdir}/info'
-install_sh='${SHELL} /home/tom/dev/unagi/install-sh'
+install_sh='${SHELL} /home/tom/dev/tom/xcbsync/install-sh'
 libdir='${exec_prefix}/lib'
 libexecdir='${exec_prefix}/libexec'
 localedir='${datarootdir}/locale'
