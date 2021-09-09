@@ -130,16 +130,10 @@ am__uninstall_files_from_dir = { \
   }
 am__installdirs = "$(DESTDIR)$(pluginsdir)"
 LTLIBRARIES = $(plugins_LTLIBRARIES)
-expose_la_LIBADD =
-am_expose_la_OBJECTS = expose_la-expose.lo
-expose_la_OBJECTS = $(am_expose_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 am__v_lt_1 = 
-expose_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
-	$(expose_la_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
-	$(AM_CFLAGS) $(CFLAGS) $(expose_la_LDFLAGS) $(LDFLAGS) -o $@
 opacity_la_LIBADD =
 am_opacity_la_OBJECTS = opacity_la-opacity.lo
 opacity_la_OBJECTS = $(am_opacity_la_OBJECTS)
@@ -161,8 +155,7 @@ am__v_at_1 =
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
-am__depfiles_remade = ./$(DEPDIR)/expose_la-expose.Plo \
-	./$(DEPDIR)/opacity_la-opacity.Plo
+am__depfiles_remade = ./$(DEPDIR)/opacity_la-opacity.Plo
 am__mv = mv -f
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
@@ -182,8 +175,8 @@ AM_V_CCLD = $(am__v_CCLD_@AM_V@)
 am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(expose_la_SOURCES) $(opacity_la_SOURCES)
-DIST_SOURCES = $(expose_la_SOURCES) $(opacity_la_SOURCES)
+SOURCES = $(opacity_la_SOURCES)
+DIST_SOURCES = $(opacity_la_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -368,10 +361,7 @@ AM_CPPFLAGS = -I$(top_srcdir)/include $(UNAGI_CFLAGS)
 opacity_la_LDFLAGS = -no-undefined -module -avoid-version $(UNAGI_LIBS)
 opacity_la_SOURCES = opacity.c
 opacity_la_LIBTOOLFLAGS = --tag=disable-static
-expose_la_LDFLAGS = -no-undefined -module -avoid-version -lm $(UNAGI_LIBS)
-expose_la_SOURCES = expose.c
-expose_la_LIBTOOLFLAGS = --tag=disable-static
-plugins_LTLIBRARIES = opacity.la expose.la
+plugins_LTLIBRARIES = opacity.la
 all: all-am
 
 .SUFFIXES:
@@ -441,9 +431,6 @@ clean-pluginsLTLIBRARIES:
 	  rm -f $${locs}; \
 	}
 
-expose.la: $(expose_la_OBJECTS) $(expose_la_DEPENDENCIES) $(EXTRA_expose_la_DEPENDENCIES) 
-	$(AM_V_CCLD)$(expose_la_LINK) -rpath $(pluginsdir) $(expose_la_OBJECTS) $(expose_la_LIBADD) $(LIBS)
-
 opacity.la: $(opacity_la_OBJECTS) $(opacity_la_DEPENDENCIES) $(EXTRA_opacity_la_DEPENDENCIES) 
 	$(AM_V_CCLD)$(opacity_la_LINK) -rpath $(pluginsdir) $(opacity_la_OBJECTS) $(opacity_la_LIBADD) $(LIBS)
 
@@ -453,7 +440,6 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/expose_la-expose.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/opacity_la-opacity.Plo@am__quote@ # am--include-marker
 
 $(am__depfiles_remade):
@@ -482,13 +468,6 @@ am--depfiles: $(am__depfiles_remade)
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LTCOMPILE) -c -o $@ $<
-
-expose_la-expose.lo: expose.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(expose_la_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT expose_la-expose.lo -MD -MP -MF $(DEPDIR)/expose_la-expose.Tpo -c -o expose_la-expose.lo `test -f 'expose.c' || echo '$(srcdir)/'`expose.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/expose_la-expose.Tpo $(DEPDIR)/expose_la-expose.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='expose.c' object='expose_la-expose.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(expose_la_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o expose_la-expose.lo `test -f 'expose.c' || echo '$(srcdir)/'`expose.c
 
 opacity_la-opacity.lo: opacity.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(opacity_la_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT opacity_la-opacity.lo -MD -MP -MF $(DEPDIR)/opacity_la-opacity.Tpo -c -o opacity_la-opacity.lo `test -f 'opacity.c' || echo '$(srcdir)/'`opacity.c
@@ -630,7 +609,6 @@ clean-am: clean-generic clean-libtool clean-pluginsLTLIBRARIES \
 	mostlyclean-am
 
 distclean: distclean-am
-		-rm -f ./$(DEPDIR)/expose_la-expose.Plo
 	-rm -f ./$(DEPDIR)/opacity_la-opacity.Plo
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
@@ -677,7 +655,6 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-		-rm -f ./$(DEPDIR)/expose_la-expose.Plo
 	-rm -f ./$(DEPDIR)/opacity_la-opacity.Plo
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic

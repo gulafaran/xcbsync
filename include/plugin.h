@@ -48,8 +48,6 @@
 #include <xcb/damage.h>
 #include <xcb/randr.h>
 
-#include <dbus/dbus.h>
-
 #include "window.h"
 
 /** Plugin structure holding all the supported event handlers */
@@ -97,8 +95,6 @@ typedef struct
       other plugin functions except to check requirements will not be
       called */
   bool activated;
-  /** Hook to process D-Bus messages */
-  const char *(*dbus_process_message) (DBusMessage *);
   /** Plugin events hooks */
   unagi_plugin_events_notify_t events;
   /** Called before the main loop to check the plugin requirements */

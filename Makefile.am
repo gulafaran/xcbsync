@@ -1,5 +1,5 @@
 confdir = ${XDG_CONFIG_DIR}
-dist_conf_DATA = conf/core.conf conf/plugin_expose.conf
+dist_conf_DATA = conf/core.conf
 
 EXTRA_DIST = BUGS COPYING autogen.sh
 
