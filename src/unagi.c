@@ -357,23 +357,36 @@ static void init_ev(void) {
     atexit(exit_cleanup);
 }
 
+static void compositor_connect(void) {
+    globalconf.connection = xcb_connect(NULL, &globalconf.screen_nbr);
+    if(xcb_connection_has_error(globalconf.connection)) {
+        unagi_fatal("Cannot open display");
+    }
+
+    /* Get the root window */
+    globalconf.screen = xcb_aux_get_screen(globalconf.connection, globalconf.screen_nbr);
+}
+
+static void compositor_check_owner(void) {
+    /* First check whether there is already a Compositing Manager (ICCCM) */
+    xcb_get_selection_owner_cookie_t wm_cm_owner_cookie = xcb_ewmh_get_wm_cm_owner(&globalconf.ewmh, globalconf.screen_nbr);
+    /* Check ownership for WM_CM_Sn before actually claiming it (ICCCM) */
+    xcb_window_t wm_cm_owner_win;
+    if(xcb_ewmh_get_wm_cm_owner_reply(&globalconf.ewmh, wm_cm_owner_cookie, &wm_cm_owner_win, NULL) && wm_cm_owner_win != XCB_NONE)
+        unagi_fatal("A compositing manager is already active (window=%jx)", (uintmax_t) wm_cm_owner_win);
+}
+
 int main(int argc, char **argv) {
     memset(&globalconf, 0, sizeof(globalconf));
 
     parse_command_line_parameters(argc, argv);
     init_ev();
-
-    globalconf.connection = xcb_connect(NULL, &globalconf.screen_nbr);
-    if(xcb_connection_has_error(globalconf.connection))
-        unagi_fatal("Cannot open display");
+    compositor_connect();
 
     if(cfg_getbool(globalconf.cfg, "vsync-drm"))
         display_vsync_drm_init();
     else
         globalconf.vsync_drm_fd = -1;
-
-    /* Get the root window */
-    globalconf.screen = xcb_aux_get_screen(globalconf.connection, globalconf.screen_nbr);
 
     /* Send requests for EWMH atoms initialisation */
     xcb_intern_atom_cookie_t *ewmh_cookies = unagi_atoms_init();
@@ -389,9 +402,6 @@ int main(int argc, char **argv) {
     /* No need to  free ewmh_cookies in case of  error as it's already
        handles by xcb-ewmh when getting the replies */
         unagi_fatal("Cannot initialise atoms");
-
-    /* First check whether there is already a Compositing Manager (ICCCM) */
-    xcb_get_selection_owner_cookie_t wm_cm_owner_cookie = xcb_ewmh_get_wm_cm_owner(&globalconf.ewmh, globalconf.screen_nbr);
 
     /* Initialiase libev event watcher on XCB connection */
     ev_io_init(&globalconf.event_io_watcher, _unagi_io_callback, xcb_get_file_descriptor(globalconf.connection), EV_READ);
@@ -411,10 +421,7 @@ int main(int argc, char **argv) {
     if(!(*globalconf.rendering->init)())
         return EXIT_FAILURE;
 
-    /* Check ownership for WM_CM_Sn before actually claiming it (ICCCM) */
-    xcb_window_t wm_cm_owner_win;
-    if(xcb_ewmh_get_wm_cm_owner_reply(&globalconf.ewmh, wm_cm_owner_cookie, &wm_cm_owner_win, NULL) && wm_cm_owner_win != XCB_NONE)
-        unagi_fatal("A compositing manager is already active (window=%jx)", (uintmax_t) wm_cm_owner_win);
+    compositor_check_owner();
 
     /* Now send requests to register the CM */
     unagi_display_register_cm();
