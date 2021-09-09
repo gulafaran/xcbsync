@@ -98,9 +98,9 @@ unagi.o: unagi.c /usr/include/stdc-predef.h ../config.h \
  /usr/include/limits.h /usr/include/bits/posix2_lim.h ../include/util.h \
  ../include/system.h ../include/rendering.h ../include/plugin.h \
  ../include/atoms.h /usr/include/xcb/xproto.h ../include/display.h \
- ../include/event.h ../include/display.h ../include/atoms.h \
- ../include/util.h ../include/plugin.h ../include/key.h \
- /usr/include/X11/keysym.h /usr/include/X11/keysymdef.h ../include/dbus.h
+ ../include/event.h ../include/atoms.h ../include/util.h \
+ ../include/plugin.h ../include/key.h /usr/include/X11/keysym.h \
+ /usr/include/X11/keysymdef.h ../include/dbus.h
 /usr/include/stdc-predef.h:
 ../config.h:
 /usr/include/stdio.h:
@@ -277,7 +277,6 @@ unagi.o: unagi.c /usr/include/stdc-predef.h ../config.h \
 /usr/include/xcb/xproto.h:
 ../include/display.h:
 ../include/event.h:
-../include/display.h:
 ../include/atoms.h:
 ../include/util.h:
 ../include/plugin.h:

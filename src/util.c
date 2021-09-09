@@ -222,9 +222,7 @@ util_itree_rotate(unagi_util_itree_t *tree, unagi_util_itree_t *node, int direct
 static unagi_util_itree_t *
 util_itree_rebalance(unagi_util_itree_t *tree, unagi_util_itree_t *node)
 {
-  int balance;
-
-  for(; node; node = node->parent)
+   for(int balance; node; node = node->parent)
     {
       util_itree_fix_height(node);
       balance = util_itree_balance(node);

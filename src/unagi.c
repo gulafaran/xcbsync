@@ -378,12 +378,6 @@ int main(int argc, char **argv) {
     /* Send requests for EWMH atoms initialisation */
     xcb_intern_atom_cookie_t *ewmh_cookies = unagi_atoms_init();
 
-    /* Prefetch the extensions data */
-    xcb_prefetch_extension_data(globalconf.connection, &xcb_composite_id);
-    xcb_prefetch_extension_data(globalconf.connection, &xcb_damage_id);
-    xcb_prefetch_extension_data(globalconf.connection, &xcb_xfixes_id);
-    xcb_prefetch_extension_data(globalconf.connection, &xcb_randr_id);
-
     /* Pre-initialisation of the rendering backend */
     if(!unagi_rendering_load()) {
         free(ewmh_cookies);
@@ -401,7 +395,6 @@ int main(int argc, char **argv) {
 
     /* Initialiase libev event watcher on XCB connection */
     ev_io_init(&globalconf.event_io_watcher, _unagi_io_callback, xcb_get_file_descriptor(globalconf.connection), EV_READ);
-
     ev_io_start(globalconf.event_loop, &globalconf.event_io_watcher);
 
     /* Flush the X events queue before blocking */

@@ -21,8 +21,7 @@
  *  \brief Display management run on startup
  */
 
-#ifndef UNAGI_INIT_DISPLAY_H
-#define UNAGI_INIT_DISPLAY_H
+#pragma once
 
 #include <stdbool.h>
 
@@ -55,4 +54,3 @@ bool display_vsync_drm_init(void);
 int display_vsync_drm_wait(void);
 void display_vsync_drm_cleanup(void);
 
-#endif

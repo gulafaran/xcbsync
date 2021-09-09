@@ -85,64 +85,35 @@ static xcb_query_tree_cookie_t _query_tree_cookie = { 0 };
  *  client  MUST  negotiate  the   version  of  the  extension  before
  *  executing extension requests
  */
-void
-unagi_display_init_extensions(void)
-{
-  globalconf.extensions.composite = xcb_get_extension_data(globalconf.connection,
-							   &xcb_composite_id);
+void unagi_display_init_extensions(void) {
+    /* Prefetch the extensions data */
+    xcb_prefetch_extension_data(globalconf.connection, &xcb_composite_id);
+    xcb_prefetch_extension_data(globalconf.connection, &xcb_damage_id);
+    xcb_prefetch_extension_data(globalconf.connection, &xcb_xfixes_id);
+    xcb_prefetch_extension_data(globalconf.connection, &xcb_randr_id);
 
-  globalconf.extensions.xfixes = xcb_get_extension_data(globalconf.connection,
-							&xcb_xfixes_id);
+    globalconf.extensions.composite = xcb_get_extension_data(globalconf.connection, &xcb_composite_id);
+    globalconf.extensions.xfixes = xcb_get_extension_data(globalconf.connection, &xcb_xfixes_id);
+    globalconf.extensions.damage = xcb_get_extension_data(globalconf.connection, &xcb_damage_id);
+    globalconf.extensions.randr = xcb_get_extension_data(globalconf.connection, &xcb_randr_id);
 
-  globalconf.extensions.damage = xcb_get_extension_data(globalconf.connection,
-							&xcb_damage_id);
+    if(!globalconf.extensions.composite || !globalconf.extensions.composite->present)
+        unagi_fatal("No Composite extension");
 
-  globalconf.extensions.randr = xcb_get_extension_data(globalconf.connection,
-                                                       &xcb_randr_id);
+    if(!globalconf.extensions.xfixes || !globalconf.extensions.xfixes->present)
+        unagi_fatal("No XFixes extension");
 
-  if(!globalconf.extensions.composite ||
-     !globalconf.extensions.composite->present)
-    unagi_fatal("No Composite extension");
+    if(!globalconf.extensions.damage || !globalconf.extensions.damage->present)
+        unagi_fatal("No Damage extension");
 
-  unagi_debug("Composite: major_opcode=%ju",
-              (uintmax_t) globalconf.extensions.composite->major_opcode);
+    _init_extensions_cookies.composite = xcb_composite_query_version_unchecked(globalconf.connection, XCB_COMPOSITE_MAJOR_VERSION, XCB_COMPOSITE_MINOR_VERSION);
+    _init_extensions_cookies.damage = xcb_damage_query_version_unchecked(globalconf.connection, XCB_DAMAGE_MAJOR_VERSION, XCB_DAMAGE_MINOR_VERSION);
+    _init_extensions_cookies.xfixes = xcb_xfixes_query_version_unchecked(globalconf.connection, XCB_XFIXES_MAJOR_VERSION, XCB_XFIXES_MINOR_VERSION);
 
-  if(!globalconf.extensions.xfixes ||
-     !globalconf.extensions.xfixes->present)
-    unagi_fatal("No XFixes extension");
-
-  unagi_debug("XFixes: major_opcode=%ju",
-              (uintmax_t) globalconf.extensions.xfixes->major_opcode);
-
-  if(!globalconf.extensions.damage ||
-     !globalconf.extensions.damage->present)
-    unagi_fatal("No Damage extension");
-
-  unagi_debug("Damage: major_opcode=%ju",
-              (uintmax_t) globalconf.extensions.damage->major_opcode);
-
-  _init_extensions_cookies.composite =
-    xcb_composite_query_version_unchecked(globalconf.connection,
-					  XCB_COMPOSITE_MAJOR_VERSION,
-					  XCB_COMPOSITE_MINOR_VERSION);
-
-  _init_extensions_cookies.damage =
-    xcb_damage_query_version_unchecked(globalconf.connection,
-				       XCB_DAMAGE_MAJOR_VERSION,
-				       XCB_DAMAGE_MINOR_VERSION);
-
-  _init_extensions_cookies.xfixes =
-    xcb_xfixes_query_version_unchecked(globalconf.connection,
-				       XCB_XFIXES_MAJOR_VERSION,
-				       XCB_XFIXES_MINOR_VERSION);
-
-  if(globalconf.extensions.randr && globalconf.extensions.randr->present)
-    _init_extensions_cookies.randr =
-      xcb_randr_query_version_unchecked(globalconf.connection,
-                                        XCB_RANDR_MAJOR_VERSION,
-                                        XCB_RANDR_MINOR_VERSION);
-  else
-    globalconf.extensions.randr = NULL;
+    if(globalconf.extensions.randr && globalconf.extensions.randr->present)
+        _init_extensions_cookies.randr = xcb_randr_query_version_unchecked(globalconf.connection, XCB_RANDR_MAJOR_VERSION, XCB_RANDR_MINOR_VERSION);
+    else
+        globalconf.extensions.randr = NULL;
 }
 
 /** Get the  replies of the QueryVersion requests  previously sent and
