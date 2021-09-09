@@ -53,14 +53,14 @@ typedef struct _unagi_display_extensions_t
   const xcb_query_extension_reply_t *randr;
 } unagi_display_extensions_t;
 
-/** Repaint interval to 20ms (50Hz) if  it could not have been obtained
-    from RandR */
-#define UNAGI_DEFAULT_REPAINT_INTERVAL 0.02
+//20ms (60Hz)
+#define UNAGI_DEFAULT_REPAINT_INTERVAL (float)0.017
 
-/** Minimum value for the repaint interval, 10ms (200Hz), used on
+/** Minimum value for the repaint interval, 5ms (200Hz), used on
     startup if the refresh rate is too high and when determining the
     repaint interval according to the painting time */
-#define UNAGI_MINIMUM_REPAINT_INTERVAL 0.01
+//5ms (200Hz)
+#define MINIMUM_REPAINT_INTERVAL (float)0.005
 
 /** Global structure holding variables used all across the program */
 typedef struct _unagi_conf_t
