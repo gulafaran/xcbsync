@@ -9,4 +9,5 @@ unagi_include_HEADERS = structs.h 	\
 		plugin_common.h		\
 		rendering.h		\
 		atoms.h			\
-		system.h
+		system.h		\
+		vsync.h

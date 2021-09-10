@@ -51,6 +51,7 @@
 #include "util.h"
 #include "plugin.h"
 #include "key.h"
+#include "vsync.h"
 
 unagi_conf_t globalconf;
 
@@ -164,19 +165,19 @@ static void parse_command_line_parameters(int argc, char **argv) {
             display_help();
         break;
         case 'v':
-            //#TODO enable vsync
+            globalconf.vsync = true;
         break;
         case 'o':
             //#TODO enable opacity
         break;
         case 'd':
-            //#TODO use libdrm
+            globalconf.vsync_drm = true;
         break;
         case 'g':
-            //#TODO use opengl
+            globalconf.vsync_gl = true;
         break;
         case 'k':
-            //#TODO use vulkan
+            globalconf.vsync_vulkan = true;
         break;
         default:
             display_help();
@@ -228,7 +229,7 @@ static void exit_cleanup(void) {
     }
 
     ev_loop_destroy(globalconf.event_loop);
-    display_vsync_drm_cleanup();
+    vsync_cleanup();
 }
 
 static void exit_on_signal(struct ev_loop *loop, ev_signal *w, int revents) {
@@ -381,10 +382,9 @@ int main(int argc, char **argv) {
     init_ev();
     compositor_connect();
 
-    if(cfg_getbool(globalconf.cfg, "vsync-drm"))
-        display_vsync_drm_init();
-    else
-        globalconf.vsync_drm_fd = -1;
+    if(globalconf.vsync){
+        vsync_init();
+    }
 
     /* Send requests for EWMH atoms initialisation */
     xcb_intern_atom_cookie_t *ewmh_cookies = unagi_atoms_init();

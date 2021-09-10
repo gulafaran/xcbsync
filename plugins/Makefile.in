@@ -130,13 +130,13 @@ am__uninstall_files_from_dir = { \
   }
 am__installdirs = "$(DESTDIR)$(pluginsdir)"
 LTLIBRARIES = $(plugins_LTLIBRARIES)
+opacity_la_LIBADD =
+am_opacity_la_OBJECTS = opacity_la-opacity.lo
+opacity_la_OBJECTS = $(am_opacity_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 am__v_lt_1 = 
-opacity_la_LIBADD =
-am_opacity_la_OBJECTS = opacity_la-opacity.lo
-opacity_la_OBJECTS = $(am_opacity_la_OBJECTS)
 opacity_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(opacity_la_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
 	$(AM_CFLAGS) $(CFLAGS) $(opacity_la_LDFLAGS) $(LDFLAGS) -o $@
@@ -609,7 +609,7 @@ clean-am: clean-generic clean-libtool clean-pluginsLTLIBRARIES \
 	mostlyclean-am
 
 distclean: distclean-am
-	-rm -f ./$(DEPDIR)/opacity_la-opacity.Plo
+		-rm -f ./$(DEPDIR)/opacity_la-opacity.Plo
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -655,7 +655,7 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-	-rm -f ./$(DEPDIR)/opacity_la-opacity.Plo
+		-rm -f ./$(DEPDIR)/opacity_la-opacity.Plo
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

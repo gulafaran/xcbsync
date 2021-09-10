@@ -146,6 +146,10 @@ typedef struct _unagi_conf_t
     uint16_t modeswitch;
   } key_masks;
 
+  bool vsync;
+  bool vsync_drm;
+  bool vsync_gl;
+  bool vsync_vulkan;
   /** DRM FD for VSync */
   int vsync_drm_fd;
 } unagi_conf_t;

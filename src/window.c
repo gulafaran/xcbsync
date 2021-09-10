@@ -37,6 +37,7 @@
 #include "structs.h"
 #include "atoms.h"
 #include "display.h"
+#include "vsync.h"
 
 /** Append a window to the end  of the windows list which is organized
  *  from the bottommost to the topmost window
@@ -731,7 +732,7 @@ unagi_window_paint_all(unagi_window_t *windows)
     }
 
   xcb_flush(globalconf.connection);
-  display_vsync_drm_wait();
+  vsync_wait();
   (*globalconf.rendering->paint_all)();
 
   globalconf.background_reset = false;

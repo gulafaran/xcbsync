@@ -17,4 +17,5 @@ unagi_SOURCES = display.c 	\
 	plugin.c		\
 	plugin_common.c		\
 	rendering.c		\
-	unagi.c
+	unagi.c		\
+	vsync.c

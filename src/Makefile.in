@@ -107,7 +107,8 @@ am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am_unagi_OBJECTS = display.$(OBJEXT) event.$(OBJEXT) window.$(OBJEXT) \
 	atoms.$(OBJEXT) util.$(OBJEXT) key.$(OBJEXT) plugin.$(OBJEXT) \
-	plugin_common.$(OBJEXT) rendering.$(OBJEXT) unagi.$(OBJEXT)
+	plugin_common.$(OBJEXT) rendering.$(OBJEXT) unagi.$(OBJEXT) \
+	vsync.$(OBJEXT)
 unagi_OBJECTS = $(am_unagi_OBJECTS)
 am__DEPENDENCIES_1 =
 unagi_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
@@ -136,7 +137,8 @@ am__maybe_remake_depfiles = depfiles
 am__depfiles_remade = ./$(DEPDIR)/atoms.Po ./$(DEPDIR)/display.Po \
 	./$(DEPDIR)/event.Po ./$(DEPDIR)/key.Po ./$(DEPDIR)/plugin.Po \
 	./$(DEPDIR)/plugin_common.Po ./$(DEPDIR)/rendering.Po \
-	./$(DEPDIR)/unagi.Po ./$(DEPDIR)/util.Po ./$(DEPDIR)/window.Po
+	./$(DEPDIR)/unagi.Po ./$(DEPDIR)/util.Po ./$(DEPDIR)/vsync.Po \
+	./$(DEPDIR)/window.Po
 am__mv = mv -f
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
@@ -350,7 +352,8 @@ unagi_SOURCES = display.c 	\
 	plugin.c		\
 	plugin_common.c		\
 	rendering.c		\
-	unagi.c
+	unagi.c		\
+	vsync.c
 
 all: all-am
 
@@ -454,6 +457,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rendering.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/unagi.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/vsync.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/window.Po@am__quote@ # am--include-marker
 
 $(am__depfiles_remade):
@@ -624,6 +628,7 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/rendering.Po
 	-rm -f ./$(DEPDIR)/unagi.Po
 	-rm -f ./$(DEPDIR)/util.Po
+	-rm -f ./$(DEPDIR)/vsync.Po
 	-rm -f ./$(DEPDIR)/window.Po
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
@@ -679,6 +684,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/rendering.Po
 	-rm -f ./$(DEPDIR)/unagi.Po
 	-rm -f ./$(DEPDIR)/util.Po
+	-rm -f ./$(DEPDIR)/vsync.Po
 	-rm -f ./$(DEPDIR)/window.Po
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
