@@ -25,7 +25,6 @@
 #ifndef UNAGI_UTIL_H
 #define UNAGI_UTIL_H
 
-#include <system.h>
 #include <stdint.h>
 #include <sys/types.h>
 
