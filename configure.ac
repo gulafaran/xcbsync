@@ -145,7 +145,6 @@ AC_CONFIG_FILES([Makefile
 	src/Makefile
 	rendering/Makefile
 	plugins/Makefile
-	doc/Makefile
 	unagi.pc])
 
 AC_OUTPUT

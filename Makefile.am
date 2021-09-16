@@ -3,7 +3,7 @@ EXTRA_DIST = BUGS COPYING autogen.sh
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = unagi.pc
 
-SUBDIRS = include src rendering plugins doc
+SUBDIRS = include src rendering plugins
 
 dist-hook: ChangeLog
 

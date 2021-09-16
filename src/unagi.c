@@ -105,6 +105,7 @@ static void parse_command_line_parameters(int argc, char **argv) {
         }
     }
 
+    //#TODO remove the dlloading buisness.
     /* Get the rendering backend path if not given in the command line parameters */
     if(!globalconf.rendering_dir)
         globalconf.rendering_dir = strdup(RENDERING_DIR);
@@ -290,6 +291,11 @@ static void compositor_check_owner(void) {
 
 int main(int argc, char **argv) {
     memset(&globalconf, 0, sizeof(globalconf));
+
+    globalconf.vsync = false;
+    globalconf.vsync_drm = false;
+    globalconf.vsync_gl = false;
+    globalconf.vsync_vulkan = false;
 
     parse_command_line_parameters(argc, argv);
     init_ev();

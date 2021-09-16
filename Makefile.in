@@ -394,7 +394,7 @@ top_srcdir = @top_srcdir@
 EXTRA_DIST = BUGS COPYING autogen.sh
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = unagi.pc
-SUBDIRS = include src rendering plugins doc
+SUBDIRS = include src rendering plugins
 MAINTAINERCLEANFILES = ChangeLog
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
