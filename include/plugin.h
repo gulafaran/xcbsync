@@ -1,45 +1,4 @@
-/* -*-mode:c;coding:utf-8; c-basic-offset:2;fill-column:70;c-file-style:"gnu"-*-
- *
- * Copyright (C) 2009 Arnaud "arnau" Fontaine <arnau@mini-dweeb.org>
- *
- * This  program is  free  software: you  can  redistribute it  and/or
- * modify  it under the  terms of  the GNU  General Public  License as
- * published by the Free Software  Foundation, either version 3 of the
- * License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but
- * WITHOUT  ANY  WARRANTY;  without   even  the  implied  warranty  of
- * MERCHANTABILITY or  FITNESS FOR A PARTICULAR PURPOSE.   See the GNU
- * General Public License for more details.
- *
- * You should have  received a copy of the  GNU General Public License
- *  along      with      this      program.      If      not,      see
- *  <http://www.gnu.org/licenses/>.
- */
-
-/** \file
- *  \brief Effects plugins
- *
- *  General Plugins architecture:
- *
- *  Several plugins  may be loaded at  the same time.   Each plugin is
- *  defined in a 'unagi_plugin_t' structure holding the virtual table of the
- *  plugin itself ('unagi_plugin_vtable_t').
- *
- *  Each plugin has  to defined 'unagi_plugin_vtable_t plugin_vtable', which
- *  is  a virtual  table  containing the  plugin  name, general  hooks
- *  pointer and events hooks pointer ('unagi_plugin_events_notify_t').  This
- *  way, each plugin  can register one or several  hooks, run when the
- *  main  program receives  an event  notification, by  simply setting
- *  function pointers in this structure.
- *
- *  NOTE: On  startup, the constructor routine  (dlopen()) should only
- *  allocate  memory but  not  send any  X  request as  this would  be
- *  usually done by 'unagi_window_manage_existing' hook.
- */
-
-#ifndef UNAGI_PLUGIN_H
-#define UNAGI_PLUGIN_H
+#pragma once
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -141,5 +100,3 @@ void unagi_plugin_load_all(void);
 void unagi_plugin_check_requirements(void);
 unagi_plugin_t *unagi_plugin_search_by_name(const char *);
 void unagi_plugin_unload_all(void);
-
-#endif
