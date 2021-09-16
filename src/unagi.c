@@ -55,86 +55,6 @@
 
 unagi_conf_t globalconf;
 
-#define CONFIG_FILENAME "core.conf"
-
-/** If the configuration directory path has not been specified through
- *  program arguments, set the path in the following order:
- *
- *   1. $XDG_CONFIG_HOME directory ($HOME and other directories)
- *   2. Build time directory (/usr/local/etc/xdg/unagi by default)
- *   3. Other $XDG_CONFIG_DIRS directories
- *
- *  Also, use the same directory for the next call
- *  (globalconf.conf_path), otherwise another file in a completely
- *  different directory may be used next time...
- */
-static void
-_unagi_set_conf_path(void)
-{
-  char *tmp = calloc(FILENAME_MAX, 1);
-  xdgHandle xdg;
-  xdgInitHandle(&xdg);
-
-#define RELPATH PACKAGE_NAME "/" CONFIG_FILENAME
-
-  const char *xdg_config_home = xdgConfigHome(&xdg);
-  snprintf(tmp, FILENAME_MAX - 1, "%s/" RELPATH, xdg_config_home);
-  struct stat s;
-  if(stat(tmp, &s) == 0)
-    {
-      tmp[strlen(tmp) - strlen(CONFIG_FILENAME) - 1] = '\0';
-      globalconf.conf_path = strdup(tmp);
-    }
-
-  else if(stat(XDG_CONFIG_DIR "/" CONFIG_FILENAME, &s) == 0)
-    globalconf.conf_path = strdup(XDG_CONFIG_DIR);
-
-  else
-    for(const char * const *p = xdgConfigDirectories(&xdg); *p; p++)
-      {
-        snprintf(tmp, FILENAME_MAX - 1, "%s/" RELPATH, *p);
-        if(stat(tmp, &s) == 0)
-          {
-            const size_t path_len = strlen(*p) + strlen("/" PACKAGE_NAME) + 1;
-            globalconf.conf_path = malloc(path_len);
-            snprintf(globalconf.conf_path, path_len, "%s/" PACKAGE_NAME, *p);
-            break;
-          }
-      }
-
-  free(tmp);
-  xdgWipeHandle(&xdg);
-
-  if(!globalconf.conf_path)
-    unagi_fatal("Cannot find configuration directory");
-}
-
-/** Parse the configuration file with confuse
- *
- * \param config_fp The configuration file stream
- * \return Return true if parsing succeeded
- */
-static void
-_unagi_parse_configuration_file(void)
-{
-  cfg_opt_t opts[] = {
-    CFG_BOOL("vsync-drm", cfg_false, CFGF_NONE),
-    CFG_STR("rendering", "render", CFGF_NONE),
-    CFG_STR_LIST("plugins", "{}", CFGF_NONE),
-    CFG_END()
-  };
-
-  globalconf.cfg = cfg_init(opts, CFGF_NONE);
-  char *fname_path = unagi_util_get_configuration_filename_path(CONFIG_FILENAME);
-  if(cfg_parse(globalconf.cfg, fname_path) != CFG_SUCCESS)
-    {
-      free(fname_path);
-      unagi_fatal("Can't parse configuration file");
-    }
-
-  free(fname_path);
-}
-
 static inline void display_help(void)
 {
     printf("Usage: " PACKAGE_NAME "[options]\n\
@@ -185,11 +105,6 @@ static void parse_command_line_parameters(int argc, char **argv) {
         }
     }
 
-    if(!globalconf.conf_path)
-        _unagi_set_conf_path();
-
-    _unagi_parse_configuration_file();
-
     /* Get the rendering backend path if not given in the command line parameters */
     if(!globalconf.rendering_dir)
         globalconf.rendering_dir = strdup(RENDERING_DIR);
@@ -213,8 +128,6 @@ static void exit_cleanup(void) {
         free(globalconf.crtc[i]);
 
     free(globalconf.crtc);
-    free(globalconf.conf_path);
-    cfg_free(globalconf.cfg);
     free(globalconf.rendering_dir);
     free(globalconf.plugins_dir);
 

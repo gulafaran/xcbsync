@@ -64,10 +64,6 @@ typedef struct _unagi_display_extensions_t
 /** Global structure holding variables used all across the program */
 typedef struct _unagi_conf_t
 {
-  /** Configuration directory specified through program arguments or
-      set to the first XDG/Autoconf directory where unagi/core.conf
-      has been found */
-  char *conf_path;
   /** libev event loop */
   struct ev_loop *event_loop;
   /** libev I/O watcher on XCB FD, invoked in paint callback to ensure
@@ -109,8 +105,6 @@ typedef struct _unagi_conf_t
   /** Damaged region which must be repainted */
   xcb_xfixes_region_t damaged;
   bool force_repaint;
-  /** Confuse configuration file options */
-  cfg_t *cfg;
   /** List of KeySyms, only updated when receiving a KeyboardMapping event */
   xcb_key_symbols_t *keysyms;
 

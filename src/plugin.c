@@ -83,7 +83,7 @@ _unagi_plugin_append_global(unagi_plugin_t *previous_plugin,
 void
 unagi_plugin_load_all(void)
 {
-  const unsigned int plugins_nb = cfg_size(globalconf.cfg, "plugins");
+  const unsigned int plugins_nb = 1; // #TODO remove all this .so loading
   if(!plugins_nb)
     return;
 
@@ -91,9 +91,7 @@ unagi_plugin_load_all(void)
   unagi_plugin_t *plugin = NULL;
   for(unsigned int plugin_n = 0; plugin_n < plugins_nb; plugin_n++)
     {
-      unagi_plugin_t *new_plugin = _unagi_plugin_load(cfg_getnstr(globalconf.cfg,
-                                                                  "plugins",
-                                                                  plugin_n));
+      unagi_plugin_t *new_plugin = _unagi_plugin_load("opacity");
       if(!new_plugin)
         ;
       else if(strcmp(new_plugin->vtable->name, "opacity") == 0)

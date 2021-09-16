@@ -39,8 +39,7 @@ unagi_rendering_load(void)
   /* Clear any existing error */
   dlerror();
 
-  globalconf.rendering_dlhandle = unagi_plugin_common_dlopen(globalconf.rendering_dir,
-                                                             cfg_getstr(globalconf.cfg, "rendering"));
+  globalconf.rendering_dlhandle = unagi_plugin_common_dlopen(globalconf.rendering_dir, "render");
 
   char *error;
   if((error = dlerror()))

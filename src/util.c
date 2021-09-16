@@ -92,17 +92,6 @@ void _unagi_debug(const int line __attribute__((unused)),
 }
 
 
-char *
-unagi_util_get_configuration_filename_path(const char *fname)
-{
-  const size_t path_len = strlen(globalconf.conf_path) + strlen(fname) + 2;
-  char *path = malloc(path_len);
-  snprintf(path, path_len, "%s/%s", globalconf.conf_path, fname);
-
-  unagi_info("Getting configuration file '%s'", path);
-  return path;
-}
-
 /** Implementation of  a lightweight  balanced Binary Tree  (AVL) with
  *  uint32_t as key and void * as values, meaningful when lookups need
  *  to be efficient (for instance when  getting a window in each event

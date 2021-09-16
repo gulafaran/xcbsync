@@ -73,8 +73,6 @@ void _unagi_debug(int, const char *, const char *, ...)
     *__ptr = NULL;                                 \
   }
 
-char *unagi_util_get_configuration_filename_path(const char *);
-
 typedef struct _unagi_util_itree_t
 {
   uint32_t key;
