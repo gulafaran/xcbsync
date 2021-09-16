@@ -2,6 +2,7 @@
 
 #include <stdint.h>
 #include <sys/types.h>
+#include <stdarg.h>
 
 #define mod(x, N) ((((x) < 0) ? (((x) % (N)) + (N)) : (x)) % (N))
 #define min(x, y) ((x) < (y) ? (x) : (y))

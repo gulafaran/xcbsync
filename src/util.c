@@ -1,9 +1,12 @@
+#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <limits.h>
+#include <stdarg.h>
 
 #include "structs.h"
 #include "util.h"
+#include "config.h"
 
 #define DO_DISPLAY_MESSAGE(LABEL)                       \
   {                                                     \
@@ -65,6 +68,8 @@ void _unagi_debug(const int line __attribute__((unused)),
        const char *fmt __attribute__((unused)),
        ...)
 {
+    if(DEBUG_PRINT)
+        DO_DISPLAY_MESSAGE("DEBUG");
 }
 
 

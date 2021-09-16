@@ -313,8 +313,6 @@ unagi_display_add_damaged_region(xcb_xfixes_region_t *region,
       xcb_xfixes_union_region(globalconf.connection, globalconf.damaged,
                               *region, globalconf.damaged);
 
-      unagi_debug("Added %x to damaged region %x", *region, globalconf.damaged);
-
       if(do_destroy_region)
         xcb_xfixes_destroy_region(globalconf.connection, *region);
     }
@@ -337,9 +335,6 @@ unagi_display_add_damaged_region(xcb_xfixes_region_t *region,
         }
       else
         globalconf.damaged = *region;
-
-      unagi_debug("Initialized damaged region to %x (copied: %d)",
-                  globalconf.damaged, !do_destroy_region);
     }
 
   if(do_destroy_region)

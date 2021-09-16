@@ -325,8 +325,6 @@ unagi_window_get_region(unagi_window_t *window, bool screen_relative, bool check
                                 (int16_t) (window->geometry->y +
                                            window->geometry->border_width));
 
-  unagi_debug("Created new region %x from window %x", new_region, window->id);
-
   if(check_shape)
     {
       window->shape_cookie = xcb_xfixes_fetch_region_unchecked(globalconf.connection,
@@ -683,9 +681,6 @@ unagi_window_paint_all(unagi_window_t *windows)
 
       if(window->damaged)
         {
-          unagi_debug("Painting window %jx (ptr=%p), damaged_ratio=%.2f",
-                      (uintmax_t) window->id, window, window->damaged_ratio);
-
           (*globalconf.rendering->paint_window)(window);
         }
       /* When the  window has been damaged  or was damaged but  is not

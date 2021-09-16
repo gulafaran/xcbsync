@@ -214,14 +214,6 @@ unagi_event_handle_startup(xcb_generic_event_t *event)
 static void
 event_handle_damage_notify(xcb_damage_notify_event_t *event)
 {
-  unagi_debug("DamageNotify: area: %jux%ju %+jd %+jd "
-              "(drawable=%jx,geometry=%jux%ju +%jd +%jd)",
-              (uintmax_t) event->area.width, (uintmax_t) event->area.height,
-              (intmax_t) event->area.x, (intmax_t) event->area.y,
-              (uintmax_t) event->drawable,
-              (uintmax_t) event->geometry.width, (uintmax_t) event->geometry.height,
-              (uintmax_t) event->geometry.x, (uintmax_t) event->geometry.y);
-
   unagi_window_t *window = unagi_window_list_get(event->drawable);
   /* The window may have disappeared in the meantime or is not visible
      so do nothing */
@@ -244,7 +236,6 @@ event_handle_damage_notify(xcb_damage_notify_event_t *event)
   /* Do nothing if the window is already fully damaged */
   else if(window->damaged_ratio >= UNAGI_WINDOW_FULLY_DAMAGED_RATIO)
     {
-      unagi_debug("Window %jx fully damaged (cached)", (uintmax_t) window->id);
       return;
     }
   /* If  the   window  is  considered   fully  damaged  or   too  many
@@ -253,11 +244,6 @@ event_handle_damage_notify(xcb_damage_notify_event_t *event)
   else if(window->damage_notify_counter++ > DAMAGE_NOTIFY_MAX ||
           window_get_damaged_ratio(window, event) >= UNAGI_WINDOW_FULLY_DAMAGED_RATIO)
     {
-      unagi_debug("Window %jx damaged ratio: %.2f, counter: %d",
-                  (uintmax_t) window->id,
-                  window->damaged_ratio,
-                  window->damage_notify_counter);
-
       /* @todo:  Perhaps  xcb_damage_add()  could  be  used  to  avoid
          further events to  be sent as the window  is considered fully
          damaged? */
@@ -352,14 +338,6 @@ event_handle_button_release(xcb_button_release_event_t *event)
 static void
 event_handle_motion_notify(xcb_motion_notify_event_t *event)
 {
-  unagi_debug("detail=%ju, event=%jx, root=%jx, child=%jx, state=%jx, "
-              "root_x=%d, root_y=%d, event_x=%d, event_y=%d, same_screen=%d",
-              (uintmax_t) event->detail, (uintmax_t) event->event,
-              (uintmax_t) event->event, (uintmax_t) event->child,
-              (uintmax_t) event->state,
-              event->root_x, event->root_y, event->event_x, event->event_y,
-              event->same_screen);
-
   UNAGI_PLUGINS_EVENT_HANDLE(event, motion_notify, NULL);
 }
 
@@ -372,9 +350,6 @@ event_handle_motion_notify(xcb_motion_notify_event_t *event)
 static void
 event_handle_circulate_notify(xcb_circulate_notify_event_t *event)
 {
-  unagi_debug("CirculateNotify: event=%jx, window=%jx",
-              (uintmax_t) event->event, (uintmax_t) event->window);
-
   unagi_window_t *window = unagi_window_list_get(event->window);
 
   /* Above window  of None means that  the window is  placed below all
@@ -404,14 +379,6 @@ event_handle_circulate_notify(xcb_circulate_notify_event_t *event)
 static void
 event_handle_configure_notify(xcb_configure_notify_event_t *event)
 {
-  unagi_debug("ConfigureNotify: event=%jx, window=%jx above=%jx (%jux%ju +%jd +%jd, "
-              "border=%ju)",
-              (uintmax_t) event->event, (uintmax_t) event->window,
-              (uintmax_t) event->above_sibling, 
-              (uintmax_t) event->width, (uintmax_t) event->height,
-              (intmax_t) event->x, (intmax_t) event->y,
-              (uintmax_t) event->border_width);
-
   /* If  this is  the root  window, then  just create  again  the root
      background picture */
   if(event->window == globalconf.screen->root)
@@ -501,12 +468,6 @@ event_handle_configure_notify(xcb_configure_notify_event_t *event)
 static void
 event_handle_create_notify(xcb_create_notify_event_t *event)
 {
-  unagi_debug("CreateNotify: parent=%jx, window=%jx (%jux%ju +%jd +%jd, border=%ju)",
-              (uintmax_t) event->parent, (uintmax_t) event->window,
-              (uintmax_t) event->width, (uintmax_t) event->height,
-              (intmax_t) event->x, (intmax_t) event->y,
-              (uintmax_t) event->border_width);
-
   /* Add  the  new window  whose  identifier  is  given in  the  event
      itself and  */
   unagi_window_t *new_window = window_add(event->window, false);
@@ -563,9 +524,6 @@ event_handle_destroy_notify(xcb_destroy_notify_event_t *event)
 static void
 event_handle_map_notify(xcb_map_notify_event_t *event)
 {
-  unagi_debug("MapNotify: event=%jx, window=%jx",
-              (uintmax_t) event->event, (uintmax_t) event->window);
-
   unagi_window_t *window = unagi_window_list_get(event->window);
   if(!window)
     {
@@ -603,10 +561,6 @@ event_handle_map_notify(xcb_map_notify_event_t *event)
 static void
 event_handle_reparent_notify(xcb_reparent_notify_event_t *event)
 {
-  unagi_debug("ReparentNotify: event=%jx, window=%jx, parent=%jx",
-              (uintmax_t) event->event, (uintmax_t) event->window,
-              (uintmax_t) event->parent);
-
   unagi_window_t *window = unagi_window_list_get(event->window);
 
   /* Add the window if it is not already managed */ 
