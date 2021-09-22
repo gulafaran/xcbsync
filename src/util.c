@@ -42,7 +42,8 @@ _unagi_fatal(const bool do_exit, const int line, const char *func, const char *f
 void
 _unagi_warn(const int line, const char *func, const char *fmt, ...)
 {
-  DO_DISPLAY_MESSAGE("WARN");
+    if(DEBUG_PRINT)
+        DO_DISPLAY_MESSAGE("WARN");
 }
 
 /** Information message
@@ -54,7 +55,8 @@ _unagi_warn(const int line, const char *func, const char *fmt, ...)
 void
 _unagi_info(const int line, const char *func, const char *fmt, ...)
 {
-  DO_DISPLAY_MESSAGE("INFO");
+    if(DEBUG_PRINT)
+        DO_DISPLAY_MESSAGE("INFO");
 }
 
 /** Debugging message
